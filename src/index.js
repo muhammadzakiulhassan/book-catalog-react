@@ -90,7 +90,20 @@ const books = [
 function App() {
   return (
     <div>
-      <h1>Hello React</h1>
+      <Header />
+      <BookList />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  return <h1>Liaquat Lahore Booke Store</h1>;
+}
+
+function BookList() {
+  return (
+    <div>
       <Book />
       <Book />
       <Book />
@@ -98,10 +111,18 @@ function App() {
   );
 }
 
+function Footer() {
+  return (
+    <footer>
+      {new Date().toLocaleDateString()}. The Store is currently Open
+    </footer>
+  );
+}
+
 function Book() {
   return (
     <div>
-        <img src="books/atomic-habits.jpg" alt="Atomic habbit"></img>
+      <img src="books/atomic-habits.jpg" alt="Atomic Habbits"></img>
       <h2>Atomic Habbits</h2>
       <p>
         It is a comprehensive guide to building good habits and breaking bad
