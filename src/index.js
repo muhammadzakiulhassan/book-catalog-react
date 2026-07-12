@@ -107,10 +107,20 @@ function Header() {
 }
 
 function BookList() {
+  const books = bookData;
+  // const books = [];
+  const bookNum = books.length;
   return (
     <main className="book-list">
+      <h2>Our Stock</h2>
+      {bookNum && (
+        <ul>
+          {books.map((book) => (
+            <Book bookObj={book} key={book.name} />
+          ))}
+        </ul>
+      )}
 
-    {bookData.map((book)=>(<Book bookObj={book} key={book.name}/>))}
       {/* <Book
         name="Atomic Habbits"
         summary="  It is a comprehensive guide to building good habits and breaking bad
@@ -119,7 +129,6 @@ function BookList() {
         photoName="books/atomic-habits.jpg"
         price={250}
       /> */}
-    
     </main>
   );
 }
@@ -138,16 +147,22 @@ function Book(props) {
 
 function Footer() {
   const hour = new Date().getHours();
-  const open = 9;
-  const close = 22;
-  const isOpen = hour > open && hour < close;
+  const openHour = 9;
+  const closeHour = 22;
+  const isOpen = hour > openHour && hour < closeHour;
   console.log(isOpen);
   //   if (hour > open && hour < close) alert("the Shop is Currently Open");
   //   else alert("The Shop is Closed");
 
   return (
     <footer className="footer">
-      {new Date().toLocaleDateString()}. The Store is currently Open
+      {isOpen && (
+        <div>
+          <p>We'are open until {closeHour}:00.Come visit us or order online</p>
+          <button>Order</button>
+        </div>
+      )}
+      {/* {new Date().toLocaleDateString()}. The Store is currently Open */}
     </footer>
   );
 }
