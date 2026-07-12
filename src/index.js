@@ -107,19 +107,19 @@ function Header() {
 }
 
 function BookList() {
-  const books = bookData;
-  // const books = [];
+  // const books = bookData;
+  const books = [];
   const bookNum = books.length;
   return (
     <main className="book-list">
       <h2>Our Stock</h2>
-      {bookNum && (
+      {bookNum > 0 ? (
         <ul>
           {books.map((book) => (
             <Book bookObj={book} key={book.name} />
           ))}
         </ul>
-      )}
+      ):<p>We're still working on our store. Please come back later </p>}
 
       {/* <Book
         name="Atomic Habbits"
