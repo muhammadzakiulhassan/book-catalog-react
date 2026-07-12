@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
-const books = [
+const bookData = [
   {
     id: 1,
     name: "Atomic Habbits",
@@ -89,7 +90,7 @@ const books = [
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <BookList />
       <Footer />
@@ -98,38 +99,56 @@ function App() {
 }
 
 function Header() {
-  return <h1>Liaquat Lahore Booke Store</h1>;
+  return (
+    <header className="header">
+      <h1>Liaquat Lahore Book Store</h1>
+    </header>
+  );
 }
 
 function BookList() {
   return (
-    <div>
-      <Book />
-      <Book />
-      <Book />
-    </div>
+    <main className="book-list">
+
+    {bookData.map((book)=>(<Book bookObj={book} key={book.name}/>))}
+      {/* <Book
+        name="Atomic Habbits"
+        summary="  It is a comprehensive guide to building good habits and breaking bad
+        ones using a four-step framework based on biology, psychology, and
+        neuroscience"
+        photoName="books/atomic-habits.jpg"
+        price={250}
+      /> */}
+    
+    </main>
+  );
+}
+
+function Book(props) {
+  console.log(props);
+  return (
+    <li className="book-card">
+      <img src={props.bookObj.photoName} alt="Atomic Habbits"></img>
+      <h2>{props.bookObj.name}</h2>
+      <p> {props.bookObj.summary} </p>
+      <span>{props.bookObj.price + 3}</span>
+    </li>
   );
 }
 
 function Footer() {
+  const hour = new Date().getHours();
+  const open = 9;
+  const close = 22;
+  const isOpen = hour > open && hour < close;
+  console.log(isOpen);
+  //   if (hour > open && hour < close) alert("the Shop is Currently Open");
+  //   else alert("The Shop is Closed");
+
   return (
-    <footer>
+    <footer className="footer">
       {new Date().toLocaleDateString()}. The Store is currently Open
     </footer>
-  );
-}
-
-function Book() {
-  return (
-    <div>
-      <img src="books/atomic-habits.jpg" alt="Atomic Habbits"></img>
-      <h2>Atomic Habbits</h2>
-      <p>
-        It is a comprehensive guide to building good habits and breaking bad
-        ones using a four-step framework based on biology, psychology, and
-        neuroscience
-      </p>
-    </div>
   );
 }
 
