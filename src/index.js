@@ -107,8 +107,8 @@ function Header() {
 }
 
 function BookList() {
-  // const books = bookData;
-  const books = [];
+  const books = bookData;
+  // const books = [];
   const bookNum = books.length;
   return (
     <main className="book-list">
@@ -119,7 +119,9 @@ function BookList() {
             <Book bookObj={book} key={book.name} />
           ))}
         </ul>
-      ):<p>We're still working on our store. Please come back later </p>}
+      ) : (
+        <p>We're still working on our store. Please come back later </p>
+      )}
 
       {/* <Book
         name="Atomic Habbits"
@@ -133,37 +135,51 @@ function BookList() {
   );
 }
 
-function Book(props) {
-  console.log(props);
+function Book({bookObj}) {
+  console.log(bookObj);
+  if (bookObj.soldOut) return null;
   return (
     <li className="book-card">
-      <img src={props.bookObj.photoName} alt="Atomic Habbits"></img>
-      <h2>{props.bookObj.name}</h2>
-      <p> {props.bookObj.summary} </p>
-      <span>{props.bookObj.price + 3}</span>
+      <img src={bookObj.photoName} alt="Atomic Habbits"></img>
+      <h2>{bookObj.name}</h2>
+      <p> {bookObj.summary} </p>
+      <span>{bookObj.price + 3}</span>
     </li>
   );
 }
 
 function Footer() {
   const hour = new Date().getHours();
+  console.log(hour)
   const openHour = 9;
   const closeHour = 22;
   const isOpen = hour > openHour && hour < closeHour;
   console.log(isOpen);
   //   if (hour > open && hour < close) alert("the Shop is Currently Open");
   //   else alert("The Shop is Closed");
-
+  // if(!isOpen) return<p> We're happy to welcome you between {openHour}:00.{closeHour}:00.</p>
   return (
     <footer className="footer">
-      {isOpen && (
-        <div>
-          <p>We'are open until {closeHour}:00.Come visit us or order online</p>
-          <button>Order</button>
-        </div>
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour} />
+      ) : (
+        <p>
+          We're happy to welcome you between {openHour}:00.{closeHour}:00.
+        </p>
       )}
       {/* {new Date().toLocaleDateString()}. The Store is currently Open */}
     </footer>
+  );
+}
+
+function Order({closeHour,openHour}) {
+  return (
+    <div>
+      <p>
+        We'are open from {openHour}:00 to {closeHour}:00.Come visit us or order online
+      </p>
+      <button>Order</button>
+    </div>
   );
 }
 
