@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -114,11 +114,14 @@ function BookList() {
     <main className="book-list">
       <h2>Our Stock</h2>
       {bookNum > 0 ? (
-        <ul>
-          {books.map((book) => (
-            <Book bookObj={book} key={book.name} />
-          ))}
-        </ul>
+        <>
+          <p>Welcome to Our Book Store</p>
+          <ul>
+            {books.map((book) => (
+              <Book bookObj={book} key={book.name} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>We're still working on our store. Please come back later </p>
       )}
@@ -135,14 +138,32 @@ function BookList() {
   );
 }
 
-function Book({bookObj}) {
-  console.log(bookObj);
+function Book({ bookObj }) {
+  const { summary } = bookObj;
+
+  var [isSummary, setIsSummary] = useState(false);
+
+  function handleSummary() {
+    return setIsSummary(!isSummary);
+  }
+  console.log("isSummary", isSummary);
+
+  // console.log(bookObj);
   if (bookObj.soldOut) return null;
   return (
     <li className="book-card">
       <img src={bookObj.photoName} alt="Atomic Habbits"></img>
       <h2>{bookObj.name}</h2>
-      <p> {bookObj.summary} </p>
+      <buttons
+        style={{ backgroundColor: "#7950f2", color: "#fff" }}
+        onClick={handleSummary}
+      >
+        {isSummary?"Hide Summary":"show Summary"}
+      </buttons>
+      <div>
+         {isSummary? <p>{bookObj.summary}</p>:"" }
+      </div>
+     
       <span>{bookObj.price + 3}</span>
     </li>
   );
@@ -150,7 +171,7 @@ function Book({bookObj}) {
 
 function Footer() {
   const hour = new Date().getHours();
-  console.log(hour)
+  console.log(hour);
   const openHour = 9;
   const closeHour = 22;
   const isOpen = hour > openHour && hour < closeHour;
@@ -172,11 +193,12 @@ function Footer() {
   );
 }
 
-function Order({closeHour,openHour}) {
+function Order({ closeHour, openHour }) {
   return (
     <div>
       <p>
-        We'are open from {openHour}:00 to {closeHour}:00.Come visit us or order online
+        We'are open from {openHour}:00 to {closeHour}:00.Come visit us or order
+        online
       </p>
       <button>Order</button>
     </div>
